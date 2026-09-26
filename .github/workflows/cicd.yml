@@ -96,15 +96,16 @@ jobs:
           distribution: 'temurin'
       - name: Maker Maven Wrapper Executable
         run: chmod +x mvnw
-        
-       - name: Build and verify with JDK 8
+
+      - name: Build and verify with JDK 8
         run: ./mvnw -B verify
 
       - name: Set up JDK 17 for Sonar
         uses: actions/setup-java@v4
-        with:
+        with: 
           java-version: '17'
           distribution: 'temurin'
+        
       - name: Sonar Scan
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
