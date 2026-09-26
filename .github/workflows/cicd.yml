@@ -55,6 +55,7 @@ jobs:
               </server>
             </servers>
           </settings>
+          EOF
 
       - name: Make Maven Wrapper Executable
         run: chmod +x mvnw
