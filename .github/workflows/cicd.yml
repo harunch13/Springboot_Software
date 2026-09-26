@@ -94,6 +94,8 @@ jobs:
         with:
           java-version: '8'
           distribution: 'temurin'
+      - name: Maker Maven Wrapper Executable
+        run: chmod +x mvnw
       - name: Sonar Scan
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
@@ -112,6 +114,8 @@ jobs:
         with:
           java-version: '8'
           distribution: 'temurin'
+      - name: Maker Maven Wrapper Executable
+        run: chmod +x mvnw
       - name: Download WAR
         uses: actions/download-artifact@v4
         with:
