@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build and Test
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
@@ -85,7 +85,7 @@ jobs:
   sonarqube:
     name: SonarQube Analysis
     needs: build
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 8
@@ -102,7 +102,7 @@ jobs:
   publish-nexus:
     name: Publish to Nexus
     needs: build
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v4
@@ -122,7 +122,7 @@ jobs:
   deploy-tomcat:
     name: Deploy to Tomcat
     needs: publish-nexus
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Download WAR
         uses: actions/download-artifact@v4
