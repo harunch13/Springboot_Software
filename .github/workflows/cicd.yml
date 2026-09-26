@@ -54,7 +54,7 @@ jobs:
                 <password>${{ secrets.TOMCAT_PASSWORD }}</password>
               </server>
             </servers>
-          </EOF
+          </settings>
 
       - name: Make Maven Wrapper Executable
         run: chmod +x mvnw
