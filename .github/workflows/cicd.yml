@@ -105,7 +105,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-
       - name: Sonar Scan
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
