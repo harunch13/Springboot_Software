@@ -181,6 +181,10 @@ jobs:
           path: target/
 
       - name: Deploy to Nexus
+        env:
+          NODE_TLS_REJECT_UNAUTHORIZED: "0"
+          PHANTOMJS_CDNURL: "https://npmmirror.com/mirrors/phantomjs/"
+          OPENSSL_CONF: "/dev/null"
         run: ./mvnw -B deploy -DskipTests -Pprod
 
   deploy-tomcat:
