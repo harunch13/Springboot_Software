@@ -167,23 +167,15 @@ jobs:
       - name: Make Maven Wrapper Executable
         run: chmod +x mvnw
 
-      - name: Set up Maven for Github Packages
+      - name: Set up Maven for GitHub Packages
         uses: s4u/maven-settings-action@v2.8.0
         with:
-          servers: |
-            [{
-            "id": "github",
-            "username": "$
-            {{ github.actor }}",
-            "password": "$
-            {{ secrets.GITHUB_TOKEN}}"
-            }]
+          servers: '[{"id": "github","username": "${{ github.actor }}","password": "${{ secrets.GITHUB_TOKEN }}"}]'
 
       - name: Deploy to GitHub Packages
-         run: ./mvnw -B deploy -DskipTests-Pprod
-         env: 
-          GITHUB_TOKEN: $ 
-          {{ secrets.GITHUB_TOKEN }}
+        run: ./mvnw -B deploy -DskipTests -Pprod
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
          
   deploy-tomcat:
     name: Deploy to Tomcat
