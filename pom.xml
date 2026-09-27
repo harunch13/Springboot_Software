@@ -18,7 +18,7 @@
         <repository>
             <id>github</id> 
             <name>GitHub Packages</name>
-            <url>http://maven.pkg.github.com/harunch13/Springboot_Software</url>
+            <url>https://maven.pkg.github.com/harunch13/Springboot_Software</url>
         </repository>
     </distributionManagement>
     <name>Great Big Example Application</name>
