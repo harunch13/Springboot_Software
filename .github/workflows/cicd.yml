@@ -167,24 +167,24 @@ jobs:
       - name: Make Maven Wrapper Executable
         run: chmod +x mvnw
 
-      - name: Deploy to Nexus
-        env:
-          NODE_TLS_REJECT_UNAUTHORIZED: "0"
-          PHANTOMJS_CDNURL: "https://npmmirror.com/mirrors/phantomjs/"
-          OPENSSL_CONF: "/dev/null"
-          NEXUS_URL: ${{ secrets.NEXUS_URL }}
-        run: |
-          if [ -z "$NEXUS_URL" ]; then
-            echo "NEXUS_URL secret is required and must be the reachable Nexus release repository URL."
-            exit 1
-          fi
-          if [[ "$NEXUS_URL" == *localhost* || "$NEXUS_URL" == *127.0.0.1* ]]; then
-            echo "NEXUS_URL must be reachable by GitHub Actions; localhost refers to the runner itself."
-            exit 1
-          fi
-          ./mvnw -B deploy -DskipTests -Pprod \
-            -DaltDeploymentRepository="nexus-releases::default::${NEXUS_URL}"
+      - name: Set up Maven for Github Packages
+        uses: s4u/maven-settings-action@v2.8.0
+        with:
+          servers: |
+            [{
+            "id": "github",
+            "username": "$
+            {{ github.actor }}",
+            "password": "$
+            {{ secrets.GITHUB_TOKEN}}"
+            }]
 
+      - name: Deploy to GitHub Packages
+         run: ./mvnw -B deploy -DskipTests-Pprod
+         env: 
+          GITHUB_TOKEN: $ 
+          {{ secrets.GITHUB_TOKEN }}
+         
   deploy-tomcat:
     name: Deploy to Tomcat
     needs: publish-nexus
