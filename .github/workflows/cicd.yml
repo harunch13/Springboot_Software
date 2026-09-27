@@ -1,4 +1,3 @@
-#
 name: JHipster CI Build
 
 on:
@@ -7,14 +6,10 @@ on:
   pull_request:
     branches: [main, master]
 
-defaults:
-  run:
-    shell: '"C:\Program Files\Git\usr\bin\bash.exe" --noprofile --norc -eo pipefail {0}'
-
 jobs:
   build:
     name: Build and Test
-    runs-on: [self-hosted, Windows, X64]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
@@ -33,11 +28,9 @@ jobs:
           node-version: '20'
 
       - name: Pre-install global tools
-      - shell: powershell
         run: |
           npm install -g rimraf@2 webpack@2.5.0
-          npm_prefix="$(cygpath -m "$npm_prefix" | sed 's#/*$##')"
-          npm_prefix="$(npm config get prefix | tr -d '\r' | sed 's#\\$##')"
+          npm_prefix="$(npm config get prefix)"
           printf '%s\n' "$npm_prefix" >> "$GITHUB_PATH"
 
       - name: Set up legacy Node.js for the app
@@ -94,7 +87,7 @@ jobs:
   sonarqube:
     name: SonarQube Analysis
     needs: build
-    runs-on: [self-hosted, Windows, X64]
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -136,7 +129,7 @@ jobs:
   publish-nexus:
     name: Publish to Nexus
     needs: build
-    runs-on: [self-hosted, Windows, X64]
+    runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
 
     steps:
@@ -193,7 +186,7 @@ jobs:
   deploy-tomcat:
     name: Deploy to Tomcat
     needs: publish-nexus
-    runs-on: [self-hosted, Windows, X64]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Download WAR
