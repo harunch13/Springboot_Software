@@ -32,12 +32,10 @@ jobs:
           node-version: '6.11.0'
 
       - name: Pre-install global tools
-        shell: powershell -NoProfile -ExecutionPolicy Bypass -File "{0}"
+        shell: cmd
         run: |
           npm install -g rimraf@2 webpack@2.5.0
-          $npmBin = nmp bin -g
-          $utf8NoBom = New-Object -TypeName System.Test.UTF8Eencoding -Argumentlist $false
-          [System.IO.File]::AppendAllText($env:GITHUB_PATH, "$npmBin`n", $utf8NoBom")
+          for /f "delims=" %%i in ('npm bin -g') do echo %%i>>"%GITHUB_PATH%"
 
       - name: Create Maven Settings
         run: |
