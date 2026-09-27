@@ -32,8 +32,10 @@ jobs:
           node-version: '20'
 
       - name: Pre-install global tools
+      - shell: powershell
         run: |
           npm install -g rimraf@2 webpack@2.5.0
+          npm_prefix="$(cygpath -m "$npm_prefix" | sed 's#/*$##')"
           npm_prefix="$(npm config get prefix | tr -d '\r' | sed 's#\\$##')"
           printf '%s\n' "$npm_prefix" >> "$GITHUB_PATH"
 
