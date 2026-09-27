@@ -32,9 +32,11 @@ jobs:
           node-version: '6.11.0'
 
       - name: Pre-install global tools
+        shell: pwsh
         run: |
           npm install -g rimraf@2 webpack@2.5.0
-          echo "$(npm bin -g)" >> "$GITHUB_PATH"
+          $npmBin = nmp bin -g
+          Add-content -Path $env:GITHUB_PATH -Value $npmBin
 
       - name: Create Maven Settings
         run: |
