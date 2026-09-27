@@ -26,16 +26,21 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Set up Node.js
+      - name: Set up Node.js for global tools
         uses: actions/setup-node@v4
         with:
-          node-version: '6.11.0'
+          node-version: '20'
 
       - name: Pre-install global tools
         shell: cmd
         run: |
           npm install -g rimraf@2 webpack@2.5.0
           for /f "delims=" %%i in ('npm bin -g') do echo %%i>>"%GITHUB_PATH%"
+
+      - name: Set up legacy Node.js for the app
+        uses: actions/setup-node@v4
+        with:
+          node-version: '6.11.0'
 
       - name: Create Maven Settings
         run: |
