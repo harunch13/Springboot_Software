@@ -179,29 +179,4 @@ jobs:
       - name: Deploy to GitHub Packages
         run: ./mvnw -B deploy -DskipTests -Pprod -Dskip.installnodenpm -Dskip.yarn -Dskip.npm
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-         
-  deploy-tomcat:
-    name: Deploy to Tomcat
-    needs: publish-nexus
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-
-    steps:
-      - name: Download WAR
-        uses: actions/download-artifact@v4
-        with:
-          name: great-big-example-app-prod
-          path: ./deploy
-
-      - name: Deploy WAR to Tomcat Manager
-        env:
-          TOMCAT_USER: ${{ secrets.TOMCAT_USER }}
-          TOMCAT_PASSWORD: ${{ secrets.TOMCAT_PASSWORD }}
-          TOMCAT_URL: ${{ secrets.TOMCAT_URL }}
-        run: |
-          WAR_FILE=$(ls ./deploy/*.war | head -n 1)
-          curl --fail --show-error --silent \
-            -u "$TOMCAT_USER:$TOMCAT_PASSWORD" \
-            -T "$WAR_FILE" \
-            "$TOMCAT_URL/manager/text/deploy?path=/greatbigexampleapp&update=true"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
