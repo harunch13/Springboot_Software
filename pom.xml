@@ -16,14 +16,10 @@
 
     <distributionManagement>
         <repository>
-            <id>nexus-releases</id>
-            <url>http://localhost:8081/repository/maven-releases/</url>
+            <id>github</id> 
+            <name>GitHub Packages</name>
+            <url>http://maven.pkg.github.com/harunch13/Springboot_Software</url>
         </repository>
-
-        <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <url>http://localhost:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
     </distributionManagement>
     <name>Great Big Example Application</name>
 
