@@ -173,7 +173,7 @@ jobs:
           servers: '[{"id": "github","username": "${{ github.actor }}","password": "${{ secrets.GITHUB_TOKEN }}"}]'
 
       - name: Deploy to GitHub Packages
-        run: ./mvnw -B deploy -DskipTests -Pprod
+        run: ./mvnw -B deploy -DskipTests -Pprod -Dskip.installnodenpm -Dskip.yarn -Dskip.npm
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
          
