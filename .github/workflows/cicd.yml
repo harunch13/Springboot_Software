@@ -124,6 +124,16 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@4
+        with:
+          node-version: '6.11.0'
+      - name: Pre-install global tools 
+        run: |
+          npm install -g rimraf@2 webpacks@2.5.0
+          echo "$(npm bin -g)" >> "$GITHUB_PATH"
+          
       - name: Maker Maven Wrapper Executable
         run: chmod +x mvnw
       - name: Download WAR
